@@ -1,0 +1,57 @@
+GET http://localhost:3001/users
+
+###
+
+GET http://localhost:3001/users/9082657d-deb1-4ced-80a5-87f6a7d59051
+
+###
+
+POST http://localhost:3001/users
+Content-Type: application/json
+//0b1efcc3-3ffe-4d5e-9da6-7da55c42856a
+{
+  "name":"ADMIN",
+  "email":"adm@admin"
+}
+
+###
+
+PUT http://localhost:3001/users/9082657d-deb1-4ced-80a5-87f6a7d59051
+Content-Type: application/json
+
+{
+  "name": "Updated Luw",
+  "email":"ld97@gmail.com"
+}
+
+###
+
+DELETE http://localhost:3001/users/69853b7d-6f65-403f-955d-1223e3143780
+
+###
+//claim a ticket
+POST http://localhost:3001/users/9082657d-deb1-4ced-80a5-87f6a7d59051/tickets/3e540004-dd2b-43cc-a64a-611a303c9958/claim
+
+###
+
+###
+//my tickets
+GET http://localhost:3001/users/9082657d-deb1-4ced-80a5-87f6a7d59051/myTickets
+
+###
+
+###
+//my events
+GET http://localhost:3001/users/0b1efcc3-3ffe-4d5e-9da6-7da55c42856a/myEvents
+
+###
+
+###
+//form criar eventos
+GET http://localhost:3001/users/0b1efcc3-3ffe-4d5e-9da6-7da55c42856a/events/createEvent
+
+###
+
+
+
+

@@ -1,0 +1,39 @@
+GET http://localhost:3001/events
+
+###
+
+GET http://localhost:3001/events/af3f0c1d-e484-429d-86f5-7c1edcadae05
+
+###
+
+POST http://localhost:3001/events
+Content-Type: application/json
+
+{
+  "title":"admin event",
+  "location":"find",
+  "date":"today",
+  "content":"my first party",
+  "eventOwnerId":"0b1efcc3-3ffe-4d5e-9da6-7da55c42856a"
+  //"af3f0c1d-e484-429d-86f5-7c1edcadae05"
+}
+
+###
+
+PUT http://localhost:3001/events/2
+Content-Type: application/json
+
+{
+  "name": "Updated Luw",
+  "email":"ld97@gmail.com"
+}
+
+###
+
+DELETE http://localhost:3001/events/2
+
+###
+//form para criar tickets
+GET http://localhost:3001/events/af3f0c1d-e484-429d-86f5-7c1edcadae05/createTickets
+
+###
