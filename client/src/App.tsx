@@ -11,6 +11,8 @@ import {
   Divider,
 } from "@chakra-ui/react";
 import { Flex } from "@chakra-ui/react";
+import Navbar from "./components/navbar";
+import Footer from "./components/footer";
 type event = { title: String; location: String };
 
 function App() {
@@ -25,12 +27,14 @@ function App() {
 
   return (
     <>
-      <Heading as="h3" size="lg">
-        Eventos:
-      </Heading>
-      {events.map((event) => {
-        return (
-          <Flex direction={"row"}>
+      <Navbar></Navbar>
+      <Flex justify="center">
+        <Heading>Perto de Você! 🚩</Heading>
+      </Flex>
+
+      <Flex justify="center">
+        {events.map((event) => {
+          return (
             <Card maxW="sm">
               <CardBody>
                 <Image
@@ -58,9 +62,10 @@ function App() {
                 </ButtonGroup>
               </CardFooter>
             </Card>
-          </Flex>
-        );
-      })}
+          );
+        })}
+      </Flex>
+      <Footer></Footer>
     </>
   );
 }
