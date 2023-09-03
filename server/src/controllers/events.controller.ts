@@ -23,7 +23,7 @@ async function getEvent(req: Request, res: Response, next: NextFunction) {
 }
 
 async function createEvent(req: Request, res: Response, next: NextFunction) {
-  if (!req.body.eventOwnerId) {
+  if (!req.body.eventOwnerId && !req.body.title) {
     res.status(400).json({ error: "Missing event owner id" });
     return;
   }

@@ -14,12 +14,27 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
+import { useNavigate } from "react-router-dom";
+import { ColorModeToggler } from "./colorModeToggler";
 
-export default function WithSubnavigation(props: any) {
+export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure();
+  const navigate = useNavigate();
+
+  function homepage() {
+    navigate("/");
+  }
+
+  function signUp() {
+    navigate("/users/register");
+  }
+
+  function signIn() {
+    navigate("/users/login");
+  }
 
   return (
-    <Box>
+    <Box marginBottom={2}>
       <Flex
         bg={useColorModeValue("white", "gray.800")}
         color={useColorModeValue("gray.600", "white")}
@@ -30,6 +45,7 @@ export default function WithSubnavigation(props: any) {
         borderStyle={"solid"}
         borderColor={useColorModeValue("gray.200", "gray.900")}
         align={"center"}
+        as={"header"}
       >
         <Flex
           flex={{ base: 1, md: "auto" }}
@@ -51,9 +67,11 @@ export default function WithSubnavigation(props: any) {
             boxSize="50px"
             src={arara}
             alt="eventas logo"
+            onClick={homepage}
+            cursor="pointer"
           />
 
-          <Flex display={{ base: "none", md: "flex" }} ml={10}>
+          <Flex display={{ base: "none", md: "flex" }} ml={10} align={"center"}>
             <DesktopNav />
           </Flex>
         </Flex>
@@ -69,7 +87,8 @@ export default function WithSubnavigation(props: any) {
             fontSize={"sm"}
             fontWeight={400}
             variant={"link"}
-            href={"#"}
+            onClick={signIn}
+            cursor="pointer"
           >
             Sign In
           </Button>
@@ -80,16 +99,17 @@ export default function WithSubnavigation(props: any) {
             fontWeight={600}
             color={"white"}
             bg={"pink.400"}
-            href={"#"}
             _hover={{
               bg: "pink.300",
             }}
+            onClick={signUp}
+            cursor="pointer"
           >
             Sign Up
           </Button>
+          <ColorModeToggler></ColorModeToggler>
         </Stack>
       </Flex>
-
       <Collapse in={isOpen} animateOpacity>
         <MobileNav />
       </Collapse>
@@ -192,6 +212,7 @@ interface NavItem {
 const NAV_ITEMS: Array<NavItem> = [
   {
     label: "All Events",
+    href: "/",
   },
   {
     label: "My Events",
