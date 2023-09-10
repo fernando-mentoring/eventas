@@ -30,7 +30,7 @@ Content-Type: application/json
 
 ###
 
-DELETE http://localhost:3001/events/2
+DELETE http://localhost:3001/events/7f1f2c63-275d-4b05-99df-aac703e58398
 
 ###
 //form para criar tickets

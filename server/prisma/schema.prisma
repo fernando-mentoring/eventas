@@ -14,30 +14,39 @@ model Note {
 }
 
 model Ticket {
-  id            String  @id @default(uuid())
+  id            String   @id @default(uuid())
   content       String?
-  ticketOwner   User?   @relation(fields: [ticketOwnerId], references: [id])
+  ticketOwner   User?    @relation(fields: [ticketOwnerId], references: [id])
   ticketOwnerId String?
-  event         Event?  @relation(fields: [eventId], references: [id])
+  event         Event?   @relation(fields: [eventId], references: [id])
   eventId       String?
   price         Float
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @default(now()) @updatedAt
 }
 
 model Event {
   id           String   @id @default(uuid())
   title        String
   location     String
-  date         String
+  startDate    String   @default("Today")
+  endDate      String?
+  startHour    String   @default("12:00")
+  endHour      String?
   content      String?
   eventOwner   User     @relation(fields: [eventOwnerId], references: [id])
   eventOwnerId String
   tickets      Ticket[]
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @default(now()) @updatedAt
 }
 
 model User {
-  id      String   @id @default(uuid())
-  email   String   @unique
-  name    String
-  events  Event[]
-  tickets Ticket[]
+  id        String   @id @default(uuid())
+  email     String   @unique
+  name      String
+  events    Event[]
+  tickets   Ticket[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 }

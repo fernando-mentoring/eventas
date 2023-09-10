@@ -8,18 +8,21 @@ import {
   Button,
 } from "@chakra-ui/react";
 
-const data = {
-  isNew: true,
-};
-
 interface CardProps {
   title: String;
   location: String;
   eventId: String;
   checkEvent: Function;
+  startDate: String;
 }
 
-const EventCard = ({ title, location, checkEvent, eventId }: CardProps) => {
+const EventCard = ({
+  title,
+  location,
+  checkEvent,
+  eventId,
+  startDate,
+}: CardProps) => {
   return (
     <Flex p={5} alignItems="center" justifyContent="center">
       <Box
@@ -44,15 +47,15 @@ const EventCard = ({ title, location, checkEvent, eventId }: CardProps) => {
           }
           alt={`Picture of ${"name"}`}
           roundedTop="lg"
+          onClick={() => checkEvent(eventId)}
+          cursor={"pointer"}
         />
 
         <Box p="5">
           <Box display="flex" alignItems="baseline">
-            {data.isNew && (
-              <Badge rounded="full" px="2" fontSize="0.8em" colorScheme="red">
-                New
-              </Badge>
-            )}
+            <Badge rounded="full" px="2" fontSize="0.8em" colorScheme="red">
+              {startDate}
+            </Badge>
           </Box>
           <Flex mt="1" justifyContent="space-between" alignContent="center">
             <Box
@@ -66,8 +69,8 @@ const EventCard = ({ title, location, checkEvent, eventId }: CardProps) => {
             </Box>
           </Flex>
           <Flex justifyContent="space-between" alignContent="center">
-            <Box fontSize="2xl" color={useColorModeValue("gray.800", "white")}>
-              <Box as="span" color={"gray.600"} fontSize="lg">
+            <Box fontSize="xl" color={useColorModeValue("gray.800", "white")}>
+              <Box as="span" color={"gray.600"} fontSize="md">
                 📍
               </Box>
               {location}

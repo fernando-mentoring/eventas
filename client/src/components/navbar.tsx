@@ -29,6 +29,11 @@ export default function WithSubnavigation() {
     navigate("/users/register");
   }
 
+  function logOut() {
+    navigate("/");
+    console.log("Logout!");
+  }
+
   function signIn() {
     navigate("/users/login");
   }
@@ -106,6 +111,21 @@ export default function WithSubnavigation() {
             cursor="pointer"
           >
             Sign Up
+          </Button>
+          <Button
+            as={"a"}
+            display={{ base: "none", md: "inline-flex" }}
+            fontSize={"sm"}
+            fontWeight={600}
+            color={"white"}
+            bg={"pink.400"}
+            _hover={{
+              bg: "pink.300",
+            }}
+            onClick={logOut}
+            cursor="pointer"
+          >
+            Log Out
           </Button>
           <ColorModeToggler></ColorModeToggler>
         </Stack>
@@ -216,5 +236,6 @@ const NAV_ITEMS: Array<NavItem> = [
   },
   {
     label: "My Events",
+    href: "/users/0b1efcc3-3ffe-4d5e-9da6-7da55c42856a/myEvents",
   },
 ];

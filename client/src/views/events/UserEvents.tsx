@@ -1,25 +1,25 @@
 import { useEffect, useState } from "react";
 import { Container, Box, Flex, Heading } from "@chakra-ui/react";
-
+import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { EventCard } from "../components/eventCard";
+import { EventCard } from "../../components/eventCard";
 
 type event = { title: String; location: String; id: String; startDate: String };
 
-const Homepage = () => {
+const UserEvents = () => {
   const navigate = useNavigate();
-
+  const { userId } = useParams();
   function checkEvent(eventId: String) {
     navigate("/events/" + eventId);
   }
 
   const [events, setEvents] = useState<event[]>([]);
   useEffect(() => {
-    fetch("http://localhost:3001/events", { method: "GET" }).then(
-      async (res) => {
-        setEvents(await res.json());
-      }
-    );
+    fetch("http://localhost:3001/users/" + userId + "/myEvents", {
+      method: "GET",
+    }).then(async (res) => {
+      setEvents(await res.json());
+    });
   }, []);
 
   {
@@ -55,4 +55,4 @@ const Homepage = () => {
     );
   }
 };
-export { Homepage };
+export { UserEvents };

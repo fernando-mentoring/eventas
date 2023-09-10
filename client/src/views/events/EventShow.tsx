@@ -19,7 +19,6 @@ type event = { title: String; location: String; date: String; content: String };
 
 const EventShow = () => {
   const { eventId } = useParams();
-  console.log(eventId);
   const [event, setEvent] = useState<event>();
   useEffect(() => {
     fetch("http://localhost:3001/events/" + eventId, { method: "GET" }).then(

@@ -27,14 +27,14 @@ async function createEvent(req: Request, res: Response, next: NextFunction) {
     res.status(400).json({ error: "Missing event owner id" });
     return;
   }
-  const { title, location, date, eventOwnerId, content } = req.body;
+  const { title, location, startDate, eventOwnerId, content } = req.body;
   try {
     const event = await prisma.event.create({
       data: {
         eventOwnerId,
         title,
         location,
-        date,
+        startDate,
         content,
       },
     });
@@ -54,7 +54,7 @@ async function updateEvent(req: Request, res: Response, next: NextFunction) {
     return;
   }
   const { id } = req.params;
-  const { title, location, date, content } = req.body;
+  const { title, location, startDate, content } = req.body;
   try {
     const event = await prisma.event.update({
       where: { id: String(id) },
@@ -62,7 +62,7 @@ async function updateEvent(req: Request, res: Response, next: NextFunction) {
         content,
         title,
         location,
-        date,
+        startDate,
       },
     });
     res.json(event);
