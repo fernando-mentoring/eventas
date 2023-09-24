@@ -1,5 +1,3 @@
-"use client";
-
 import {
   Button,
   Checkbox,
@@ -11,9 +9,43 @@ import {
   Input,
   Stack,
   Image,
+  useToast,
 } from "@chakra-ui/react";
+import { useForm, SubmitHandler } from "react-hook-form";
+import axios from "axios";
+
+type Inputs = {
+  email: String;
+  password: String;
+};
 
 const SignIn = () => {
+  const { register, handleSubmit } = useForm<Inputs>();
+  const toast = useToast();
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    const serverSideApi = axios.create({
+      baseURL: "http://localhost:3001",
+    });
+    try {
+      const response = await serverSideApi.post("/users/auth", data);
+      if (response.status == 200) {
+        toast({
+          title: "Login.",
+          description: "Welcome to Eventas! 🎉",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        });
+      }
+    } catch (e) {
+      toast({
+        title: "Error! Please, try again.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+  };
   return (
     <Stack minH={"100vh"} direction={{ base: "column", md: "row" }}>
       <Flex p={8} flex={1} align={"center"} justify={"center"}>
@@ -24,27 +56,30 @@ const SignIn = () => {
           <Text fontSize={"lg"} color={"gray.600"} textAlign={"center"}>
             Good to see you again! 🎈
           </Text>
-          <FormControl id="email">
-            <FormLabel htmlFor="email">Email Address</FormLabel>
-            <Input type="email" id="email" />
-          </FormControl>
-          <FormControl id="password">
-            <FormLabel htmlFor="password">Password</FormLabel>
-            <Input type="password" id="password" />
-          </FormControl>
-          <Stack spacing={6}>
-            <Stack
-              direction={{ base: "column", sm: "row" }}
-              align={"start"}
-              justify={"space-between"}
-            >
-              <Checkbox>Remember me</Checkbox>
-              <Text color={"blue.500"}>Forgot password?</Text>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <FormControl id="email">
+              <FormLabel htmlFor="email">Email Address</FormLabel>
+              <Input type="email" id="email" {...register("email")} />
+            </FormControl>
+            <FormControl id="password">
+              <FormLabel htmlFor="password">Password</FormLabel>
+              <Input type="password" id="password" {...register("password")} />
+            </FormControl>
+
+            <Stack spacing={6}>
+              <Stack
+                direction={{ base: "column", sm: "row" }}
+                align={"start"}
+                justify={"space-between"}
+              >
+                <Checkbox>Remember me</Checkbox>
+                <Text color={"blue.500"}>Forgot password?</Text>
+              </Stack>
+              <Button colorScheme={"blue"} variant={"solid"} type="submit">
+                Sign In
+              </Button>
             </Stack>
-            <Button colorScheme={"blue"} variant={"solid"}>
-              Sign In
-            </Button>
-          </Stack>
+          </form>
         </Stack>
       </Flex>
       <Flex flex={1}>

@@ -10,6 +10,7 @@ import {
   getMyTickets,
   getMyEvents,
   getEventCreationForm,
+  authUser,
 } from "../controllers/users.controller";
 
 export const userRouter = Router();
@@ -17,6 +18,7 @@ export const userRouter = Router();
 userRouter.get("/users", getUsers);
 userRouter.get("/users/:id", getUser);
 userRouter.post("/users", createUser);
+userRouter.post("/users/auth", authUser);
 userRouter.put("/users/:id", updateUser);
 userRouter.delete("/users/:id", deleteUser);
 userRouter.post("/users/:id/tickets/:ticketId/claim", claimTicket);

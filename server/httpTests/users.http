@@ -5,13 +5,14 @@ GET http://localhost:3001/users
 GET http://localhost:3001/users/9082657d-deb1-4ced-80a5-87f6a7d59051
 
 ###
-
+//0b1efcc3-3ffe-4d5e-9da6-7da55c42856a
 POST http://localhost:3001/users
 Content-Type: application/json
-//0b1efcc3-3ffe-4d5e-9da6-7da55c42856a
+
 {
   "name":"ADMIN",
-  "email":"adm@admin"
+  "email":"adm@admin",
+  "password":"123"
 }
 
 ###

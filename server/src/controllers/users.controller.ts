@@ -1,5 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { prisma } from "..";
+const bcrypt = require(`bcryptjs`);
+const jwt = require("jsonwebtoken");
 
 async function getUsers(req: Request, res: Response, next: NextFunction) {
   const users = await prisma.user.findMany({
@@ -24,20 +26,51 @@ async function getUser(req: Request, res: Response, next: NextFunction) {
   }
 }
 
-async function createUser(req: Request, res: Response, next: NextFunction) {
-  if (!req.body.name || !req.body.email) {
-    res.status(400).json({ error: "Missing name or email" });
+async function authUser(req: Request, res: Response, next: NextFunction) {
+  if (!req.body) {
+    res.status(400).json({ error: "Missing Body" });
     return;
   }
-  const { name, email } = req.body;
+  const { email, password } = req.body;
   try {
+    const user = await prisma.user.findUnique({
+      where: { email: email },
+    });
+    if (!user) {
+      res.status(400).json({ message: "Invalid user or password" });
+    }
+
+    const hashPassword = user?.password;
+    const isValidPassword = bcrypt.compareSync(password, hashPassword);
+    if (!isValidPassword) {
+      res.status(400).json({ message: "Invalid user or password" });
+    }
+
+    const jwtPayload = { email: email };
+    const token = jwt.sign(jwtPayload, process.env.SECRET, { expiresIn: `1h` });
+    console.log(token);
+    res.status(200).json({ token: token });
+  } catch (error) {
+    next(error);
+  }
+}
+// falta implementar o middleware de auth
+async function createUser(req: Request, res: Response, next: NextFunction) {
+  if (!req.body.name || !req.body.email || !req.body.password) {
+    res.status(400).json({ error: "Missing info" });
+    return;
+  }
+  const { name, email, password } = req.body;
+  try {
+    const hashPassword = bcrypt.hashSync(password, 10);
     const user = await prisma.user.create({
       data: {
         name,
         email,
+        password: hashPassword,
       },
     });
-    res.json(user);
+    res.status(200).json({ message: "User Created!" });
   } catch (error) {
     next(error);
   }
@@ -149,4 +182,5 @@ export {
   getMyTickets,
   getMyEvents,
   getEventCreationForm,
+  authUser,
 };

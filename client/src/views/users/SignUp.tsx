@@ -23,6 +23,7 @@ import { useNavigate } from "react-router-dom";
 type Inputs = {
   name: String;
   email: String;
+  password: String;
 };
 
 const SignUp = () => {
@@ -108,7 +109,11 @@ const SignUp = () => {
                 <FormControl id="password" isRequired>
                   <FormLabel>Password</FormLabel>
                   <InputGroup>
-                    <Input type={showPassword ? "text" : "password"} />
+                    <Input
+                      type={showPassword ? "text" : "password"}
+                      id="password"
+                      {...register("password")}
+                    />
                     <InputRightElement h={"full"}>
                       <Button
                         variant={"ghost"}
